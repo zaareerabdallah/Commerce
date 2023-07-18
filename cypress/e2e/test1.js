@@ -10,28 +10,51 @@ beforeEach(()=>{
 });
 
 
+
 describe("nopcommerce advance automation cypress",()=>{
  
         it('register username',()=>{
-    
+        
+
+        let firstname=['abd','khaled','sami','yazan','yaqeen','louna'];
+        let lastname=['alahmad','alzaareer','zaareer','harb','harbi'];
+        let a=Math.floor(Math.random()*firstname.length);
+        let b=Math.floor(Math.random()*lastname.length);
+        //console.log(firstname[a]+" "+lastname[b])
+        let n=Math.floor(Math.random()*(50000)).toString();
+
+       
+        let chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz@#$%^&*()";
+        let string_length = 8;
+        let password = '';
+        for (let i=0; i<string_length; i++) {
+            let rnum = Math.floor(Math.random() * chars.length);
+            password += chars.substring(rnum,rnum+1);
+        }
+    console.log(password)
+       
+        
          cy.visit('https://demo.nopcommerce.com/')
          cy.get('.ico-register').click()
          cy.get('#gender-male').check()
-         cy.get('#FirstName').type("yaseen")
-         cy.get('#LastName').type("salem")
+         cy.get('#FirstName').type(firstname[a])
+         cy.get('#LastName').type(lastname[b])
          cy.get('[name="DateOfBirthYear"]').select("1995")
          cy.get('[name="DateOfBirthMonth"]').select("May")
          cy.get('[name="DateOfBirthDay"]').select("9")
-         cy.get('#Email').type("yaseen.salem@gmail.com")
+         cy.get('#Email').type(firstname[a]+"."+lastname[b]+n+"@gmail.com")
          cy.get('#Company').type("Epro")
          cy.get('#Newsletter').uncheck()
-         cy.get('#Password').type("12345678")
-         cy.get('#ConfirmPassword').type("12345678")
+
+        
+
+         cy.get('#Password').type(password)
+         cy.get('#ConfirmPassword').type(password)
          cy.get('#register-button').click()
          cy.get('.result').invoke("text").should('match',/(Your registration completed)/i)
           
     });
-    it('Add to cart anything ',()=>{
+        it('Add to cart anything ',()=>{
         cy.visit('https://demo.nopcommerce.com/')
         cy.get('#customerCurrency').select("Euro")
         cy.get('img[title="Show products in category Electronics"]').click()
